@@ -3,10 +3,12 @@ import useRequest from "../useRequest";
 
 const url = `${process.env.HOST}/api/warranty`;
 
-export const getDashboardCounts = (): {
-  data: IDashboardCounts | null;
+type ReturnDashboardCounts = {
+  dashBoardCounts: IDashboardCounts | null;
   error: string;
-} => {
+};
+
+export const getDashboardCounts = (): ReturnDashboardCounts => {
   const { data, error } = useRequest<IDashboardCounts>({
     url: `${url}/getdashboardcounts`,
     method: "post",
@@ -14,10 +16,10 @@ export const getDashboardCounts = (): {
   });
   const msg = error != undefined ? error.message : "";
   const content = data != undefined ? data : null;
-  return { data: content, error: msg };
+  return { dashBoardCounts: content, error: msg };
 };
 
-/*const GETDASHBOARDCOUNTS_URL = `${url}/getdashboardcounts`;
+/*
 const GETSERVICEORDERSBYMODEL_URL = `${url}/getserviceordersbymodel`;
 const GETSERVICEORDERSBYVENDOR_URL = `${url}/getserviceordersbyvendor`;
 const GETVENDOREFFICIENCY_URL = `${url}/getvendorefficiency`;
