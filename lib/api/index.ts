@@ -1,23 +1,30 @@
-import { IDashboardCounts } from "../models/dashboardcounts";
+import { IDashboardCounts, IServiceOrdersByModel } from "../models";
 import useRequest from "../useRequest";
 
 const url = `${process.env.HOST}/api/warranty`;
 
-type ReturnDashboardCounts = {
-  dashBoardCounts: IDashboardCounts | null;
+type Response<T> = {
+  data: T | null;
   error: string;
 };
 
-export const getDashboardCounts = (): ReturnDashboardCounts => {
-  const { data, error } = useRequest<IDashboardCounts>({
-    url: `${url}/getdashboardcounts`,
+function PostRequest<T>(endpoint: string): Response<T> {
+  const { data, error } = useRequest<T>({
+    url: `${url}${endpoint}`,
     method: "post",
     data: {},
   });
-  const msg = error != undefined ? error.message : "";
-  const content = data != undefined ? data : null;
-  return { dashBoardCounts: content, error: msg };
-};
+  return {
+    data: data != undefined ? data : null,
+    error: error != undefined ? error.message : "",
+  };
+}
+
+export const getDashboardCounts = () =>
+  PostRequest<IDashboardCounts>("/getdashboardcounts");
+
+export const getServiceOrders = (): Response<IServiceOrdersByModel> =>
+  PostRequest<IServiceOrdersByModel>("/getserviceordersbymodel");
 
 /*
 const GETSERVICEORDERSBYMODEL_URL = `${url}/getserviceordersbymodel`;

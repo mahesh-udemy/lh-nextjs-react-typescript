@@ -6,3 +6,13 @@ export interface IDashboardCounts {
   daysToComplete: number;
   totalCost: number;
 }
+
+export interface IServiceOrdersByModel {
+  model: string;
+  serviceOrder: number;
+}
+
+export type IHeatMapSeries = {
+  name: string;
+  data: number[];
+};

@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import { getDashboardCounts } from "../../lib/api/warranty";
+import { getDashboardCounts } from "../../lib/api";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,39 +17,45 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CenteredGrid() {
   const classes = useStyles();
-  const result = getDashboardCounts();
+  const { data: dashboardCounts } = getDashboardCounts();
 
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            {result.dashBoardCounts && result.dashBoardCounts.totalOrders}
+            {dashboardCounts && dashboardCounts.totalOrders}
+            Total Orders
           </Paper>
         </Grid>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            {result.dashBoardCounts && result.dashBoardCounts.openOrders}
+            {dashboardCounts && dashboardCounts.openOrders}
+            Open Orders
           </Paper>
         </Grid>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            {result.dashBoardCounts && result.dashBoardCounts.closedOrders}
+            {dashboardCounts && dashboardCounts.closedOrders}
+            Closed orders
           </Paper>
         </Grid>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            {result.dashBoardCounts && result.dashBoardCounts.totalDelinquent}
+            {dashboardCounts && dashboardCounts.totalDelinquent}
+            Total Delinquent
           </Paper>
         </Grid>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            {result.dashBoardCounts && result.dashBoardCounts.daysToComplete}
+            {dashboardCounts && dashboardCounts.daysToComplete}
+            Days To Complete
           </Paper>
         </Grid>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            {result.dashBoardCounts && result.dashBoardCounts.totalCost}
+            {dashboardCounts && dashboardCounts.totalCost}
+            Total Cost
           </Paper>
         </Grid>
       </Grid>

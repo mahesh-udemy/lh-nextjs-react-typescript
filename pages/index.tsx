@@ -1,12 +1,11 @@
 import React from "react";
-import DashBoardCounts from "../components/dashboard/DashboardCounts";
+import DashBoard from "../components/dashboard/Dashboard";
 import DefaultLayout from "../layouts/DefaultLayout";
 
 const IndexPage = () => {
   return (
     <DefaultLayout>
-      
-      <DashBoardCounts></DashBoardCounts>
+      <DashBoard></DashBoard>
     </DefaultLayout>
   );
 };
