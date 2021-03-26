@@ -21,7 +21,6 @@ const HeatMap: React.FC<IProps> = ({ series }) => {
       enabled: true,
       style: {
         fontSize: "11px",
-        fontFamily: "Helvetica, Arial, sans-serif",
         fontWeight: "bold",
         colors: ["#000000"],
       },
@@ -43,7 +42,7 @@ const HeatMap: React.FC<IProps> = ({ series }) => {
       series={series}
       type="heatmap"
       height={series.length * 30}
-      width="150px"
+      width="250px"
     />
   );
 };

@@ -1,9 +1,10 @@
-import { IDashboardCounts, IServiceOrdersByModel } from "../models";
+import { ServiceOrderType } from "../enums";
+import { IDashboardCounts } from "../models";
 import useRequest from "../useRequest";
 
 const url = `${process.env.HOST}/api/warranty`;
 
-type Response<T> = {
+export type Response<T> = {
   data: T | null;
   error: string;
 };
@@ -20,11 +21,23 @@ function PostRequest<T>(endpoint: string): Response<T> {
   };
 }
 
-export const getDashboardCounts = () =>
-  PostRequest<IDashboardCounts>("/getdashboardcounts");
-
-export const getServiceOrders = (): Response<IServiceOrdersByModel> =>
-  PostRequest<IServiceOrdersByModel>("/getserviceordersbymodel");
+export function getData<T>(type: ServiceOrderType): Response<T> {
+  let url = null;
+  switch (type) {
+    case ServiceOrderType.HomeModel:
+      url = "/getserviceordersbymodel";
+      break;
+    case ServiceOrderType.Vendor:
+      url = "/getserviceordersbyvendor";
+      break;
+    case ServiceOrderType.DashboardCounts:
+      url = "/getdashboardcounts";
+      break;
+    default:
+      break;
+  }
+  return PostRequest<T>(url!);
+}
 
 /*
 const GETSERVICEORDERSBYMODEL_URL = `${url}/getserviceordersbymodel`;

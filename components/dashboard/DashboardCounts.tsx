@@ -2,7 +2,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import { getDashboardCounts } from "../../lib/api";
+import { getData } from "../../lib/api";
+import { IDashboardCounts } from "../../lib/models";
+import { ServiceOrderType } from "../../lib/enums";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +19,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CenteredGrid() {
   const classes = useStyles();
-  const { data: dashboardCounts } = getDashboardCounts();
+  const { data: dashboardCounts } = getData<IDashboardCounts>(
+    ServiceOrderType.DashboardCounts
+  );
 
   return (
     <div className={classes.root}>

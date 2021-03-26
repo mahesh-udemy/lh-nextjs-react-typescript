@@ -7,9 +7,16 @@ export interface IDashboardCounts {
   totalCost: number;
 }
 
-export interface IServiceOrdersByModel {
-  model: string;
+export interface IServiceOrders {
   serviceOrder: number;
+}
+
+export interface IServiceOrdersByModel extends IServiceOrders {
+  model: string;
+}
+
+export interface IServiceOrdersByVendor extends IServiceOrders {
+  vendorName: string;
 }
 
 export type IHeatMapSeries = {

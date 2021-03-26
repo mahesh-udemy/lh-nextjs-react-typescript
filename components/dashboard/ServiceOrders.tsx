@@ -1,8 +1,12 @@
 import React from "react";
 import { ServiceOrderType } from "../../lib/enums";
-import { getServiceOrders } from "../../lib/api";
+import { getData } from "../../lib/api";
 import DemoHeatmap from "../charts/HeatMap";
-import { IHeatMapSeries } from "../../lib/models";
+import {
+  IHeatMapSeries,
+  IServiceOrdersByModel,
+  IServiceOrdersByVendor,
+} from "../../lib/models";
 import styled from "styled-components";
 
 const ContentDiv = styled.div`
@@ -13,14 +17,30 @@ const ContentDiv = styled.div`
 `;
 
 const ServiceOrders: React.FC<{ type: ServiceOrderType }> = ({ type }) => {
-  const { data: serviceOrders } = getServiceOrders();
+  const { data: serviceOrders } =
+    type === ServiceOrderType.HomeModel
+      ? getData<IServiceOrdersByModel[]>(type)
+      : getData<IServiceOrdersByVendor[]>(type);
   const series: IHeatMapSeries[] = [];
-  serviceOrders?.forEach((serviceOrder) => {
-    series.push({
-      name: serviceOrder.model,
-      data: [serviceOrder.serviceOrder],
-    });
-  });
+  serviceOrders?.forEach(
+    (serviceOrder: IServiceOrdersByModel | IServiceOrdersByVendor) => {
+      let s;
+      if (type === ServiceOrderType.HomeModel) {
+        s = serviceOrder as IServiceOrdersByModel;
+        series.push({
+          name: s.model,
+          data: [s.serviceOrder],
+        });
+      } else {
+        s = serviceOrder as IServiceOrdersByVendor;
+        series.push({
+          name: s.vendorName,
+          data: [s.serviceOrder],
+        });
+      }
+    }
+  );
+
   return (
     <div>
       <div>
